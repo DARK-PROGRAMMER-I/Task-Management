@@ -7,10 +7,12 @@ class MainTaskWidget extends StatelessWidget {
     super.key,
     required this.noTasks,
     required this.name,
+    required this.iconPath,
     required this.onTap,
   });
 
   final int noTasks;
+  final String iconPath;
   final String name;
   final Function() onTap;
 
@@ -41,7 +43,7 @@ class MainTaskWidget extends StatelessWidget {
             Row(
               children: [
                 Image.asset(
-                  AppAssets.tasksIcon,
+                  iconPath,
                   width: 28.h,
                   height: 28.h,
                 ),

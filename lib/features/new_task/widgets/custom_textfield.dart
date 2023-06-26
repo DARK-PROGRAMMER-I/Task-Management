@@ -65,7 +65,7 @@ class CustomTextField extends StatelessWidget {
               keyboardType: inputType,
               maxLines: maxLines ?? 1,
               style: getRegularStyle(
-                fontSize: MyFonts.size16,
+                fontSize: MyFonts.size18,
                 color: MyColors.grayScale2Color,
               ),
               decoration: InputDecoration(

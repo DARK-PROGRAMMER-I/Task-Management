@@ -20,38 +20,75 @@ class ExpandDropDownWidget extends StatefulWidget {
   State<ExpandDropDownWidget> createState() => _ExpandDropDownWidgetState();
 }
 
-class _ExpandDropDownWidgetState extends State<ExpandDropDownWidget> {
-  bool isExpanded=false;
-  String selected='';
+class _ExpandDropDownWidgetState extends State<ExpandDropDownWidget>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+  bool isExpanded = false;
+  String selected = '';
+
   @override
   void initState() {
-    selected=widget.value??'';
+    selected = widget.value ?? '';
+
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 300),
+    );
+
+    _animation = CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeInOut,
+    );
+
     super.initState();
   }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  void _toggleExpansion() {
+    setState(() {
+      isExpanded = !isExpanded;
+
+      if (isExpanded) {
+        _animationController.forward();
+      } else {
+        _animationController.reverse();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 15.0.h),
+      padding: EdgeInsets.symmetric(vertical: 15.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             widget.labelText,
             style: getRegularStyle(
-              fontSize: MyFonts.size18,
               color: MyColors.grayScale2Color,
+              fontSize: MyFonts.size18,
             ),
           ),
-          SizedBox(height: 10.h,),
+          const SizedBox(height: 10.0),
           Container(
             decoration: BoxDecoration(
               color: MyColors.white,
-              borderRadius: BorderRadius.circular(12.r),
-              border: Border.all(color: isExpanded?MyColors.themeColor:Colors.white, width: 1.h),
+              borderRadius: BorderRadius.circular(12.0),
+              border: Border.all(
+                color: isExpanded ? MyColors.themeColor : Colors.white,
+                width: 1.0,
+              ),
               boxShadow: [
                 BoxShadow(
-                  offset: Offset(1.w, 1.h),
-                  blurRadius: 2.r,
+                  offset: Offset(1.0, 1.0),
+                  blurRadius: 2.0,
                   color: Colors.black.withOpacity(0.2),
                 )
               ],
@@ -62,66 +99,77 @@ class _ExpandDropDownWidgetState extends State<ExpandDropDownWidget> {
               horizontalTitleGap: 0,
               minLeadingWidth: 0,
               minVerticalPadding: 0,
-              child: ExpansionTile(
-                key: GlobalKey(),
-                onExpansionChanged: (val){
-                  setState(() {
-                    isExpanded=val;
-                  });
-                },
-                collapsedBackgroundColor: Colors.white,
-                initiallyExpanded: isExpanded ,
-                maintainState: true,
-                backgroundColor: MyColors.white,
-                tilePadding: EdgeInsets.symmetric(horizontal: 8.h),
-                iconColor: MyColors.themeColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                collapsedShape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                collapsedIconColor: MyColors.grayScale2Color,
-                childrenPadding: const EdgeInsets.all(0),
-                title: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    selected,
-                    style: getRegularStyle(
-                        color: MyColors.grayScale2Color, fontSize: MyFonts.size16),
-                  ),
-                ),
-                trailing: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: ImageIcon(
-                    AssetImage(isExpanded?AppAssets.dropUpIcon:AppAssets.dropDownIcon),
-                    size: 16.h,
-                  ),
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: widget.valueItems.length,
-                      itemBuilder: (context,index){
-                    return InkWell(
-                      onTap: (){
-                        setState(() {
-                          selected=widget.valueItems[index];
-                          isExpanded=!isExpanded;
-                        });
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0.w,vertical: 8.h),
-                        child: Text(
-                          widget.valueItems[index],
-                          style: getRegularStyle(
-                              color: MyColors.grayScale2Color, fontSize: MyFonts.size16),
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    leading: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        selected,
+                        style: getRegularStyle(
+                          color: MyColors.grayScale2Color,
+                          fontSize: MyFonts.size18,
                         ),
                       ),
-                    );
-                  }),
-                  SizedBox(height: 10.h,),
+                    ),
+                    trailing: RotationTransition(
+                      turns: _animation,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: ImageIcon(
+                          AssetImage(
+                            isExpanded
+                                ? AppAssets.dropUpIcon
+                                : AppAssets.dropDownIcon,
+                          ),
+                          size: 16.0,
+                        ),
+                      ),
+                    ),
+                    onTap: _toggleExpansion,
+                  ),
+                  SizeTransition(
+                    sizeFactor: _animation,
+                    axisAlignment: -1.0,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: widget.valueItems.map((item) {
+                        return InkWell(
+                          onTap: () {
+                            setState(() {
+                              selected = item;
+                              isExpanded = !isExpanded;
+
+                              if (isExpanded) {
+                                _animationController.forward();
+                              } else {
+                                _animationController.reverse();
+                              }
+                            });
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 20.w,
+                              vertical: 8.h,
+                            ),
+                            child: Text(
+                              item,
+                              style: TextStyle(
+                                color: MyColors.grayScale2Color,
+                                fontSize: MyFonts.size18,
+                              ),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -131,3 +179,115 @@ class _ExpandDropDownWidgetState extends State<ExpandDropDownWidget> {
     );
   }
 }
+
+// class _ExpandDropDownWidgetState extends State<ExpandDropDownWidget> {
+//   bool isExpanded=false;
+//   String selected='';
+//   @override
+//   void initState() {
+//     selected=widget.value??'';
+//     super.initState();
+//   }
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: EdgeInsets.symmetric(vertical: 15.0.h),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           Text(
+//             widget.labelText,
+//             style: getRegularStyle(
+//               fontSize: MyFonts.size20,
+//               color: MyColors.grayScale2Color,
+//             ),
+//           ),
+//           SizedBox(height: 10.h,),
+//           Container(
+//             decoration: BoxDecoration(
+//               color: MyColors.white,
+//               borderRadius: BorderRadius.circular(12.r),
+//               border: Border.all(color: isExpanded?MyColors.themeColor:Colors.white, width: 1.h),
+//               boxShadow: [
+//                 BoxShadow(
+//                   offset: Offset(1.w, 1.h),
+//                   blurRadius: 2.r,
+//                   color: Colors.black.withOpacity(0.2),
+//                 )
+//               ],
+//             ),
+//             child: ListTileTheme(
+//               contentPadding: EdgeInsets.zero,
+//               dense: true,
+//               horizontalTitleGap: 0,
+//               minLeadingWidth: 0,
+//               minVerticalPadding: 0,
+//               child: ExpansionTile(
+//                 key: GlobalKey(),
+//                 onExpansionChanged: (val){
+//                   setState(() {
+//                     isExpanded=val;
+//                   });
+//                 },
+//                 collapsedBackgroundColor: Colors.white,
+//                 initiallyExpanded: isExpanded ,
+//                 maintainState: true,
+//                 backgroundColor: MyColors.white,
+//                 tilePadding: EdgeInsets.symmetric(horizontal: 8.h),
+//                 iconColor: MyColors.themeColor,
+//                 shape: RoundedRectangleBorder(
+//                   borderRadius: BorderRadius.circular(12.r),
+//                 ),
+//                 collapsedShape: RoundedRectangleBorder(
+//                   borderRadius: BorderRadius.circular(12.r),
+//                 ),
+//                 collapsedIconColor: MyColors.grayScale2Color,
+//                 childrenPadding: const EdgeInsets.all(0),
+//                 title: Padding(
+//                   padding: const EdgeInsets.all(8.0),
+//                   child: Text(
+//                     selected,
+//                     style: getRegularStyle(
+//                         color: MyColors.grayScale2Color, fontSize: MyFonts.size18),
+//                   ),
+//                 ),
+//                 trailing: Padding(
+//                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+//                   child: ImageIcon(
+//                     AssetImage(isExpanded?AppAssets.dropUpIcon:AppAssets.dropDownIcon),
+//                     size: 16.h,
+//                   ),
+//                 ),
+//                 children: <Widget>[
+//                   ListView.builder(
+//                     physics: const NeverScrollableScrollPhysics(),
+//                     shrinkWrap: true,
+//                     itemCount: widget.valueItems.length,
+//                       itemBuilder: (context,index){
+//                     return InkWell(
+//                       onTap: (){
+//                         setState(() {
+//                           selected=widget.valueItems[index];
+//                           isExpanded=!isExpanded;
+//                         });
+//                       },
+//                       child: Padding(
+//                         padding: EdgeInsets.symmetric(horizontal: 20.0.w,vertical: 8.h),
+//                         child: Text(
+//                           widget.valueItems[index],
+//                           style: getRegularStyle(
+//                               color: MyColors.grayScale2Color, fontSize: MyFonts.size18),
+//                         ),
+//                       ),
+//                     );
+//                   }),
+//                   SizedBox(height: 10.h,),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

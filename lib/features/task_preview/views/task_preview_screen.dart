@@ -62,11 +62,11 @@ class TaskPreviewScreen extends StatelessWidget {
               SizedBox(
                 height: 40.h,
               ),
-              PreviewTile(title: 'Task', subtitle: 'Start working out'),
-              PreviewTile(title: 'Type', subtitle: 'Personal Project'),
-              PreviewTile(title: 'Priorty', subtitle: 'Nice to have'),
-              PreviewTile(title: 'TimeFrame', subtitle: 'Week'),
-              PreviewTile(
+              const PreviewTile(title: 'Task', subtitle: 'Start working out'),
+              const PreviewTile(title: 'Type', subtitle: 'Personal Project'),
+              const PreviewTile(title: 'Priorty', subtitle: 'Nice to have'),
+              const PreviewTile(title: 'TimeFrame', subtitle: 'Week'),
+              const PreviewTile(
                   title: 'Description ',
                   subtitle:
                       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod')

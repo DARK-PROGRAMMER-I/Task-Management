@@ -73,7 +73,7 @@ class _ExpandDropDownWidgetState extends State<ExpandDropDownWidget>
             widget.labelText,
             style: getRegularStyle(
               color: MyColors.grayScale2Color,
-              fontSize: MyFonts.size18,
+              fontSize: MyFonts.size20,
             ),
           ),
           const SizedBox(height: 10.0),
@@ -108,12 +108,12 @@ class _ExpandDropDownWidgetState extends State<ExpandDropDownWidget>
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     leading: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(16.spMin),
                       child: Text(
                         selected,
                         style: getRegularStyle(
-                          color: MyColors.grayScale2Color,
-                          fontSize: MyFonts.size18,
+                          color: MyColors.grayScale3Color,
+                          fontSize: MyFonts.size20,
                         ),
                       ),
                     ),
@@ -156,12 +156,12 @@ class _ExpandDropDownWidgetState extends State<ExpandDropDownWidget>
                           child: Padding(
                             padding: EdgeInsets.symmetric(
                               horizontal: 20.w,
-                              vertical: 8.h,
+                              vertical: 16.h,
                             ),
                             child: Text(
                               item,
                               style: TextStyle(
-                                color: MyColors.grayScale2Color,
+                                color: MyColors.grayScale3Color,
                                 fontSize: MyFonts.size18,
                               ),
                             ),

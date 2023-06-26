@@ -40,7 +40,7 @@ class CustomTextField extends StatelessWidget {
           Text(
             labelText,
             style: getRegularStyle(
-              fontSize: MyFonts.size18,
+              fontSize: MyFonts.size20,
               color: MyColors.grayScale2Color,
             ),
           ),
@@ -66,7 +66,7 @@ class CustomTextField extends StatelessWidget {
               maxLines: maxLines ?? 1,
               style: getRegularStyle(
                 fontSize: MyFonts.size18,
-                color: MyColors.grayScale2Color,
+                color: MyColors.grayScale3Color,
               ),
               decoration: InputDecoration(
                 fillColor: MyColors.white,

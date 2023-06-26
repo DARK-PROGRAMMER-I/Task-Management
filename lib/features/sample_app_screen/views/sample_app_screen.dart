@@ -47,7 +47,7 @@ class SampleAppScreen extends StatelessWidget {
                     padding: EdgeInsets.only(bottom: 20.h),
                     child: MainTaskWidget(
                         noTasks: int.parse(task.noTasks),
-                        name: 'Task',
+                        name: task.name,
                         iconPath: task.iconPath,
                         onTap: () {
                           Navigator.pushNamed(

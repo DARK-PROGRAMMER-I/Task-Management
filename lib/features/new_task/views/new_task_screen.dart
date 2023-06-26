@@ -5,6 +5,7 @@ import 'package:task_sample_app/features/new_task/widgets/custom_button.dart';
 import 'package:task_sample_app/features/new_task/widgets/DropDownWidget.dart';
 import 'package:task_sample_app/features/new_task/widgets/custom_textfield.dart';
 import 'package:task_sample_app/features/new_task/widgets/expand_tile_widget.dart';
+import 'package:task_sample_app/routes/route_manager.dart';
 import 'package:task_sample_app/utils/constants/app_constants.dart';
 import 'package:task_sample_app/utils/constants/assets_manager.dart';
 import 'package:task_sample_app/utils/constants/font_manager.dart';
@@ -135,7 +136,9 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                 height: 40.h,
               ),
               CustomButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(context, AppRoutes.sampleAppScreen, (route) => false);
+                },
                 buttonText: 'Submit',
                 borderRadius: 10.r,
                 fontSize: MyFonts.size18,

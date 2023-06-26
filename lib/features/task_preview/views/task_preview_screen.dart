@@ -48,7 +48,8 @@ class TaskPreviewScreen extends StatelessWidget {
                         color: MyColors.themeColor,
                       ),
                     ),
-                    GestureDetector(
+                    InkWell(
+                      borderRadius: BorderRadius.circular(20.r),
                         onTap: () {},
                         child: Image.asset(
                           AppAssets.deleteIcon,

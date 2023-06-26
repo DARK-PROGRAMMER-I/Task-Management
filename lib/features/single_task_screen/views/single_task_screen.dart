@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:task_sample_app/commons/common_libs.dart';
 import 'package:task_sample_app/features/single_task_screen/widgets/sub_tasks_widget.dart';
+import 'package:task_sample_app/models/subtask/subtask_model.dart';
 import 'package:task_sample_app/routes/route_manager.dart';
 import 'package:task_sample_app/utils/constants/app_constants.dart';
 import 'package:task_sample_app/utils/constants/assets_manager.dart';
@@ -49,7 +50,7 @@ class SingleTaskScreen extends StatelessWidget {
                         Text(
                           'Tasks',
                           style: getSemiBoldStyle(
-                            fontSize:MyFonts.size30,
+                            fontSize: MyFonts.size30,
                             color: MyColors.themeColor,
                           ),
                         ),
@@ -63,7 +64,7 @@ class SingleTaskScreen extends StatelessWidget {
                       ],
                     ),
                     InkWell(
-                      borderRadius: BorderRadius.circular(30.r),
+                        borderRadius: BorderRadius.circular(30.r),
                         onTap: () {
                           Navigator.pushNamed(context, AppRoutes.newTaskScreen);
                         },
@@ -78,33 +79,21 @@ class SingleTaskScreen extends StatelessWidget {
               SizedBox(
                 height: 40.h,
               ),
-              SubTaskWidget(
-                  dateTime: 'Today',
-                  title:
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu nulla in mi blandit sollicitudin in ut lacus.',
-                  onTap: () {
-                    Navigator.pushNamed(context, AppRoutes.taskPreviewScreen);
-                  }),
-              SubTaskWidget(
-                  dateTime: '3 Days',
-                  title:
-                      'Consectetur adipiscing elit. Nunc eu nulla in mi blandit sollicitudin in ut lacus.',
-                  onTap: () {}),
-              SubTaskWidget(
-                  dateTime: 'Week',
-                  title:
-                      'Nunc eu nulla in mi blandit sollicitudin in ut lacus.',
-                  onTap: () {}),
-              SubTaskWidget(
-                  dateTime: 'Fortnight',
-                  title:
-                      'Maecenas posuere nunc facilisis, cursus lectus eget, interdum nisl.in mi blandit sollicitudin in ut lacus.',
-                  onTap: () {}),
-              SubTaskWidget(
-                  dateTime: 'Month',
-                  title:
-                      'Quisque sit amet porttitor massa. Maecenas nisi tellus, dapibus vitae pellentesque at sollicitudin in ut lacus.',
-                  onTap: () {}),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: subtasksList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final SubtaskModel subtask = subtasksList[index];
+                  return SubTaskWidget(
+                    dateTime: subtask.dateTime,
+                    title: subtask.title,
+                    onTap: () {
+                      Navigator.pushNamed(context, AppRoutes.taskPreviewScreen);
+                    },
+                  );
+                },
+              ),
             ],
           ),
         ),

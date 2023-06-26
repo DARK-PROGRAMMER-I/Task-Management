@@ -64,10 +64,12 @@ class TaskModel{
 //</editor-fold>
 }
 
-final List<TaskModel> tasksList = [
+List<TaskModel> tasksList = const [
   TaskModel(noTasks: '6', name: 'Assignments', iconPath: AppAssets.tasksIcon),
   TaskModel(noTasks: '1', name: 'Cooking', iconPath: AppAssets.cookingIcon),
   TaskModel(noTasks: '2', name: 'Cleaning', iconPath: AppAssets.cleaningIcon),
   TaskModel(noTasks: '6', name: 'Homework', iconPath: AppAssets.homeTaskIcon),
   TaskModel(noTasks: '3', name: 'Book Read', iconPath: AppAssets.booksIcon),
 ];
+
+

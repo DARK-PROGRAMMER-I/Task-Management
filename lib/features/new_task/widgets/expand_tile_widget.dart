@@ -128,6 +128,7 @@ class _ExpandDropDownWidgetState extends State<ExpandDropDownWidget>
                                 : AppAssets.dropDownIcon,
                           ),
                           size: 16.0,
+                          color: isExpanded ?MyColors.themeColor : MyColors.grayScale4Color,
                         ),
                       ),
                     ),

@@ -90,18 +90,6 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                 labelText: 'Task',
                 hintText: 'Text',
               ),
-              // DropDownWidget(
-              //   hintText: '',
-              //   value: type,
-              //   labelText: 'Type',
-              //   valueItems: typeItems,
-              //   onChanged: (String? newValue) {
-              //     setState(() {
-              //       type = newValue!;
-              //     });
-              //   },
-              // ),
-
               ExpandDropDownWidget(
                 hintText: '',
                 value: type,

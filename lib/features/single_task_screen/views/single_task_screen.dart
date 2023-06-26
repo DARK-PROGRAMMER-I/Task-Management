@@ -32,6 +32,7 @@ class SingleTaskScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
+        physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.all(AppConstants.padding),
           child: Column(
@@ -61,7 +62,8 @@ class SingleTaskScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    GestureDetector(
+                    InkWell(
+                      borderRadius: BorderRadius.circular(30.r),
                         onTap: () {
                           Navigator.pushNamed(context, AppRoutes.newTaskScreen);
                         },

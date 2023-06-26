@@ -18,6 +18,7 @@ class SampleAppScreen extends StatelessWidget {
       backgroundColor: MyColors.grayScale9Color,
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
+        physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.all(AppConstants.padding),
           child: Column(

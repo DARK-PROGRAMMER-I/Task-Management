@@ -25,6 +25,9 @@ class PreviewTile extends StatelessWidget {
               color: MyColors.grayScale4Color,
             ),
           ),
+          SizedBox(
+            height: 4.h,
+          ),
           Text(
             subtitle,
             style: getRegularStyle(
